@@ -5,10 +5,11 @@ def clear():
 
 #GRAPH HUB KOTA DAN RUTE ANTAR KOTA
 graph = {
-    "Boyolali": {"Solo": 50, "Semarang": 100},
-    "Solo": {"Boyolali": 50, "Semarang": 80, "Yogyakarta": 60},
-    "Semarang": {"Boyolali": 100, "Solo": 80, "Yogyakarta": 120},
-    "Yogyakarta": {"Solo": 60, "Semarang": 120}
+    "Mikhub"    : {"Boyolali": 30, "Solo": 70, "Semarang": 90, "Yogyakarta": 110},
+    "Boyolali"  : {"Mikhub": 30, "Solo": 30, "Semarang": 100},
+    "Solo"      : {"Mikhub": 70, "Boyolali": 30, "Semarang": 80, "Yogyakarta": 60},
+    "Semarang"  : {"Mikhub": 90, "Boyolali": 100, "Solo": 80, "Yogyakarta": 120},
+    "Yogyakarta": {"Mikhub": 110, "Solo": 60, "Semarang": 120}
 }
 
 
@@ -68,7 +69,7 @@ def inputan_rute_antar_kota():
 
 #INPUTAN NAMA KOTA ASAL DAN BEBERAPA VALIDASINYA
     while True:
-        kota_asal = input(f"{'Masukkan nama pengirim':<40}: ").strip().title()
+        kota_asal = input(f"{'Masukkan nama kota asal':<40}: ").strip().title()
         if not all(c.isalpha() or c.isspace() for c in kota_asal):
             print('*' + '=' * 83 + '*')
             print("Nama kota hanya boleh berisi huruf dan spasi.")
@@ -155,21 +156,22 @@ def inputan_rute_antar_kota():
         print('*' + '=' * 83 + '*')
 
         try:
-            jarak_tepuh = float(input(" Masukkan jarak tempuh (dalam Kilo Meter): "))
-            if jarak_tepuh <= 0:
+            jarak_tempuh = float(input(" Masukkan jarak tempuh (dalam Kilo Meter): "))
+            if jarak_tempuh <= 0:
                 print('Jarak tempuh harus lebih besar dari 0.')
                 input('Tekan Enter untuk melanjutkan...')
                 continue
-        except:
+            break
+        except ValueError:
             print('jarak tempuh harus berupa angka.')
             input('Tekan Enter untuk melanjutkan...')
-        break
 
-    graph[kota_asal][kota_tujuan] = jarak_tepuh
-    graph[kota_tujuan][kota_asal] = jarak_tepuh
+
+    graph[kota_asal][kota_tujuan] = jarak_tempuh
+    graph[kota_tujuan][kota_asal] = jarak_tempuh
 
     print('*' + '=' * 83 + '*')
-    print(f"Rute dari '{kota_asal}' ke '{kota_tujuan}' dengan jarak {jarak_tepuh} KM sudah berhasil ditambahkan.")
+    print(f"Rute dari '{kota_asal}' ke '{kota_tujuan}' dengan jarak {jarak_tempuh} KM sudah berhasil ditambahkan.")
     print('*' + '=' * 83 + '*')
     return
 
@@ -204,9 +206,9 @@ def insert_bst(node, No_Resi, Nama_Pengirim, Kota_Asal, Kota_Tujuan, Berat_Paket
 bst_resi = ResiBST()
 data_awal = [
         (1034, "Mikha", "Solo", "Yogyakarta", 2.5),
-        (1231, "Khael", "Mikarang", "Solo", 1.0),
+        (1231, "Khael", "Mikhub", "Solo", 1.0),
         (1534, "El", "Yogyakarta", "Semarang", 3.0),
-        (1004, "Awan", "Solo", "Mikarang", 0.5)
+        (1004, "Awan", "Solo", "Mikhub", 0.5)
 ]
 
 for no, nama, asal, tujuan, berat in data_awal:
@@ -241,16 +243,12 @@ def input_resi_pengiriman_baru():
         print('*' + '=' * 59 + '*')
 
         no_resi_str = input(f"{'Masukkan nomor resi (4 digit, diawali dengan angka 1): ':<2}").strip()
-        if not no_resi_str.isdigit():
-            print("Nomor resi harus berupa angka.")
+        if no_resi_str == '':
+            print("Nomor resi tidak boleh kosong.")
             input("Tekan Enter untuk melanjutkan...")
             continue
         if len(no_resi_str) != 4:
             print("Nomor resi harus terdiri dari 4 digit angka.")
-            input("Tekan Enter untuk melanjutkan...")
-            continue
-        if no_resi_str == '':
-            print("Nomor resi tidak boleh kosong.")
             input("Tekan Enter untuk melanjutkan...")
             continue
         if not no_resi_str[0] == '1':
