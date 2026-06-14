@@ -49,7 +49,6 @@ def inputan_rute_antar_kota():
         print("Minimal harus terdapat 2 hub kota untuk membuat rute antar-kota.")
         return    
 
-#TAMPILAN MENU INPUT RUTE ANTAR KOTA DAN DAFTAR HUB KOTA YANG TERDAFTAR
     clear()
     print('*' + '=' * 83 + '*')
     print('*                             Menu Input Rute Antar-Kota                            *')
@@ -60,7 +59,6 @@ def inputan_rute_antar_kota():
         print(f"- {kota}")
     print('*' + '=' * 83 + '*')
 
-#INPUTAN NAMA KOTA ASAL DAN BEBERAPA VALIDASINYA
     while True:
         kota_asal = input(f"{'Masukkan nama kota asal':<40}: ").strip().title()
         if not all(c.isalpha() or c.isspace() for c in kota_asal):
@@ -85,7 +83,6 @@ def inputan_rute_antar_kota():
             continue
         break
 
-#INPUTAN NAMA KOTA TUJUAN DAN BEBERAPA VALIDASINYA
     while True:
         clear()
         print('*' + '=' * 83 + '*')
@@ -135,8 +132,6 @@ def inputan_rute_antar_kota():
             return
         break
 
-
-#INPUTAN UNTUK JARAK TEMPUH ANTAR KOTA DAN BEBERAPA VALIDASINYA
     while True:
         clear()
         print('*' + '=' * 83 + '*')
