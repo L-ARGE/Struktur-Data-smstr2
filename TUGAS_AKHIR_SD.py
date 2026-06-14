@@ -2,8 +2,6 @@ import os
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-
-#GRAPH HUB KOTA DAN RUTE ANTAR KOTA
 graph = {
     "Mikhub"    : {"Boyolali": 30, "Solo": 70, "Semarang": 90, "Yogyakarta": 110},
     "Boyolali"  : {"Mikhub": 30, "Solo": 30, "Semarang": 100},
@@ -12,10 +10,6 @@ graph = {
     "Yogyakarta": {"Mikhub": 110, "Solo": 60, "Semarang": 120}
 }
 
-
-
-#POINT 1 - KELOLA JARINGAN HUB DAN RUTE LOGISTIK
-#FUNGSI INPUTAN MENU KOTA BARU
 def inputan_hub_kota_baru():
     while True:
         clear()
@@ -45,7 +39,6 @@ def inputan_hub_kota_baru():
         print(f" Hub untuk kota '{kota}' sudah berhasil ditambahkan. ")
         break
 
-#FUNGSI INPUTAN MENU RUTE ANTAR KOTA
 def inputan_rute_antar_kota():
     if len(graph) < 2:
         clear()
@@ -175,10 +168,7 @@ def inputan_rute_antar_kota():
     print('*' + '=' * 83 + '*')
     return
 
-
-#POINT 2 - KELOLA ADMINISTRASI RESI PENGIRIMAN
-#STRUKTUR DATA BINARY SEARCH TREE (BST) UNTUK MENYIMPAN DATA RESI PENGIRIMAN
-class NodeResi:
+class Noderesi:
     def __init__(self, No_Resi, Nama_Pengirim, Kota_Asal, Kota_Tujuan, Berat_Paket, Total_Biaya_Kirim):
         self.nomor_resi = No_Resi
         self.nama_pengirim = Nama_Pengirim
@@ -189,14 +179,13 @@ class NodeResi:
         self.kiri = None
         self.kanan = None
 
-#ROOT BST RESI PENGIRIMAN
 class ResiBST:
     def __init__(self):
         self.root = None
 
 def insert_bst(node, No_Resi, Nama_Pengirim, Kota_Asal, Kota_Tujuan, Berat_Paket, Total_Biaya_Kirim):
     if node is None:
-        return NodeResi(No_Resi, Nama_Pengirim, Kota_Asal, Kota_Tujuan, Berat_Paket, Total_Biaya_Kirim)
+        return Noderesi(No_Resi, Nama_Pengirim, Kota_Asal, Kota_Tujuan, Berat_Paket, Total_Biaya_Kirim)
     if No_Resi < node.nomor_resi:
         node.kiri = insert_bst(node.kiri, No_Resi, Nama_Pengirim, Kota_Asal, Kota_Tujuan, Berat_Paket, Total_Biaya_Kirim)
     elif No_Resi > node.nomor_resi:
@@ -233,8 +222,6 @@ def cek_duplikat(node, no_resi):
     else:
         return cek_duplikat(node.kanan, no_resi)
 
-
-#FUNGSI INPUTAN NOMER RESI PENGIRIMAN BARU DAN BEBERAPA VALIDASINYA
 def input_resi_pengiriman_baru():
     while True:
         clear()
@@ -398,8 +385,6 @@ def input_resi_pengiriman_baru():
         if ulang != 'Y':
             break
 
-
-#FUNGSI UNTUK MELIHAT SELURUH DATA RESI PENGIRIMAN YANG TERDAFTAR
 def lihat_data_resi():
     clear()
     print('*' + '=' * 105 + '*')
@@ -419,9 +404,6 @@ def lihat_data_resi():
     for node in hasil:
         print(f"* {node.nomor_resi:<10} {node.nama_pengirim:<18} {node.kota_asal:<15} {node.kota_tujuan:<15} {node.berat_barang:<18.2f} {node.total_biaya_kirim:<23,.0f}*")
 
-
-#MENU UNTUK MENGURUTKAN DATA RESI PENGIRIMAN BERDASARKAN TOTAL BIAYA KIRIM TERBESAR
-#FUNGSI QUICK SORT UNTUK MENGURUTKAN DATA RESI BERDASARKAN TOTAL BIAYA KIRIM TERBESAR
 def quick_sort_resi(arr):
     if len(arr) <= 1:
         return arr
@@ -434,7 +416,6 @@ def quick_sort_resi(arr):
 
     return quick_sort_resi(kiri) + tengah + quick_sort_resi(kanan)
 
-#FUNGSI MENU UNTUK MENGURUTKAN DATA RESI PENGIRIMAN BERDASARKAN TOTAL BIAYA KIRIM TERBESAR
 def urutkan_resi_biaya_terbesar():
     clear()
     print('*' + '=' * 106 + '*')
@@ -455,15 +436,12 @@ def urutkan_resi_biaya_terbesar():
     for node in resi_terurut:
         print(f"* {node.nomor_resi:<12}{node.nama_pengirim:<18} {node.kota_asal:<15} {node.kota_tujuan:<15} {node.berat_barang:<18.2f} {node.total_biaya_kirim:<23,.0f}*")
 
-
 kurir = [
     {"ID Kurir": 2001, "Nama Kurir": "Budi", "Jenis Kendaraan": "Motor"},
     {"ID Kurir": 2002, "Nama Kurir": "Siti", "Jenis Kendaraan": "Mobil"},
 ]
 
-#Fungsi Input Data Kurir
 def input_data_kurir():
-
     while True:
         clear()
         print('*' + '=' * 59 + '*')
@@ -536,99 +514,98 @@ def input_data_kurir():
         if ulang != 'Y':
             break
 
-
 Petugas_Manifest = {}
 
 def plotting_penugasan_manifest():
+    clear()
+
+    print('*' + '=' * 59 + '*')
+    print('*         Menu Plotting Penugasan Manifest              *')
+    print('*' + '=' * 59 + '*')
+
+    if not kurir:
+        print("Belum ada data kurir yang terdaftar.")
+        input("Tekan Enter untuk melanjutkan....")
+        return
+
     while True:
         clear()
+        print('*' + '=' * 59 + '*')
+        print('*            Menu Plotting Penugasan Manifest              *')
+        print('*' + '=' * 59 + '*')
+        print("Daftar Kurir:")
+        for k in kurir:
+            print(f"- ID: {k['ID Kurir']}, Nama: {k['Nama Kurir']}, Kendaraan: {k['Jenis Kendaraan']}")
 
+        try:
+            id_kurir = int(input("Masukkan ID Kurir yang akan ditugaskan: ").strip())
+            kurir_terpilih = next((k for k in kurir if k["ID Kurir"] == id_kurir), None)
+            if kurir_terpilih is None:
+                print(f"ID Kurir '{id_kurir}' tidak ditemukan. Silakan masukkan ID yang valid.")
+                input("Tekan Enter untuk melanjutkan...")
+                continue
+            break
+        except ValueError:
+            print("ID Kurir harus berupa angka dan tidak boleh kosong.")
+            input("Tekan Enter untuk melanjutkan...")
+            continue    
+    
+    if bst_resi.root is None:
+        print("Belum ada data resi yang terdaftar.")
+        return
+
+    if id_kurir not in Petugas_Manifest:
+        Petugas_Manifest[id_kurir] = []
+    
+    while True:
+        clear()
         print('*' + '=' * 59 + '*')
         print('*         Menu Plotting Penugasan Manifest              *')
         print('*' + '=' * 59 + '*')
+        
+        print(f"{'Kurir Terpilih':<22}: {id_kurir}")
 
-        if not kurir:
-            print("Belum ada data kurir yang terdaftar.")
-            return
+        hasil = []
+        inorder(bst_resi.root, hasil)
+        print("Daftar Resi Pengiriman:")
+        for node in hasil:
+            sudah = any(node.nomor_resi in resi_list for resi_list in Petugas_Manifest.values())
+            status = "Sudah Ditugaskan" if sudah else "Belum Ditugaskan"
+            print(f"-{node.nomor_resi} {('|'):>5} {node.nama_pengirim} | {status}")
+        print('*' + '=' * 59 + '*')
 
-        while True:
-            clear()
-            print('*' + '=' * 59 + '*')
-            print('*            Menu Plotting Penugasan Manifest              *')
-            print('*' + '=' * 59 + '*')
-            print("Daftar Kurir:")
-            for k in kurir:
-                print(f"- ID: {k['ID Kurir']}, Nama: {k['Nama Kurir']}, Kendaraan: {k['Jenis Kendaraan']}")
+        try:
+            no_resi = int(input("Masukkan nomor resi yang akan ditugaskan ke kurir ini: ").strip())
 
-            try:
-                id_kurir = int(input("Masukkan ID Kurir yang akan ditugaskan: ").strip())
-                kurir_terpilih = next((k for k in kurir if k["ID Kurir"] == id_kurir), None)
-                if kurir_terpilih is None:
-                    print(f"ID Kurir '{id_kurir}' tidak ditemukan. Silakan masukkan ID yang valid.")
-                    input("Tekan Enter untuk melanjutkan...")
-                    continue
-                break
-            except ValueError:
-                print("ID Kurir harus berupa angka dan tidak boleh kosong.")
+            if len(str(no_resi)) != 4:
+                print(f"Nomor resi harus terdiri dari 4 digit angka.")
                 input("Tekan Enter untuk melanjutkan...")
-                continue    
-        
-        if bst_resi.root is None:
-            print("Belum ada data resi yang terdaftar.")
-            return
-
-        if id_kurir not in Petugas_Manifest:
-            Petugas_Manifest[id_kurir] = []
-        
-        while True:
-            clear()
-            print('*' + '=' * 59 + '*')
-            print('*         Menu Plotting Penugasan Manifest              *')
-            print('*' + '=' * 59 + '*')
-            
-            print(f"{'Kurir Terpilih':<22}: {id_kurir}")
-
-            hasil = []
-            inorder(bst_resi.root, hasil)
-            print("Daftar Resi Pengiriman:")
-            for node in hasil:
-                sudah = any(node.nomor_resi in resi_list for resi_list in Petugas_Manifest.values())
-                status = "Sudah Ditugaskan" if sudah else "Belum Ditugaskan"
-                print(f"-{node.nomor_resi} {('|'):>5} {node.nama_pengirim} | {status}")
-            print('*' + '=' * 59 + '*')
-
-            try:
-                no_resi = int(input("Masukkan nomor resi yang akan ditugaskan ke kurir ini: ").strip())
-
-                if len(str(no_resi)) != 4:
-                    print(f"Nomor resi harus terdiri dari 4 digit angka.")
-                    input("Tekan Enter untuk melanjutkan...")
-                    continue
-                if not str(no_resi)[0] == '1':
-                    print(f"Nomor resi harus diawali dengan angka '1'.")
-                    input("Tekan Enter untuk melanjutkan...")
-                    continue
-                elif any(no_resi in resi_list for resi_list in Petugas_Manifest.values()):
-                    print(f"Nomor resi '{no_resi}' sudah ditugaskan ke kurir lain. Silakan pilih nomor resi yang belum ditugaskan.")
-                    input("Tekan Enter untuk melanjutkan...")
-                    continue
-                elif not cek_duplikat(bst_resi.root, no_resi):
-                    print(f"Nomor resi '{no_resi}' tidak ditemukan. Silakan masukkan nomor resi yang valid.")
-                    input("Tekan Enter untuk melanjutkan...")
-                    continue
-
-            except ValueError:
-                print("Nomor resi harus berupa angka dan tidak boleh kosong.")
+                continue
+            if not str(no_resi)[0] == '1':
+                print(f"Nomor resi harus diawali dengan angka '1'.")
+                input("Tekan Enter untuk melanjutkan...")
+                continue
+            elif any(no_resi in resi_list for resi_list in Petugas_Manifest.values()):
+                print(f"Nomor resi '{no_resi}' sudah ditugaskan ke kurir lain. Silakan pilih nomor resi yang belum ditugaskan.")
+                input("Tekan Enter untuk melanjutkan...")
+                continue
+            elif not cek_duplikat(bst_resi.root, no_resi):
+                print(f"Nomor resi '{no_resi}' tidak ditemukan. Silakan masukkan nomor resi yang valid.")
                 input("Tekan Enter untuk melanjutkan...")
                 continue
 
-            Petugas_Manifest[id_kurir].append(no_resi)
-            print(f"Resi nomor '{no_resi}' berhasil ditugaskan ke kurir ID '{id_kurir}'.")
-            print('*' + '=' * 59 + '*')
+        except ValueError:
+            print("Nomor resi harus berupa angka dan tidak boleh kosong.")
+            input("Tekan Enter untuk melanjutkan...")
+            continue
 
-            ulang = input("\nApakah Anda ingin menugaskan resi lain ke kurir ini? (Y/N): ").strip().upper()
-            if ulang != 'Y':
-                break
+        Petugas_Manifest[id_kurir].append(no_resi)
+        print(f"Resi nomor '{no_resi}' berhasil ditugaskan ke kurir ID '{id_kurir}'.")
+        print('*' + '=' * 59 + '*')
+
+        ulang = input("\nApakah Anda ingin menugaskan resi lain ke kurir ini? (Y/N): ").strip().upper()
+        if ulang != 'Y':
+            break
 
 def tampil_manifest_dan_aturan_bonus_insentif():
     clear()
@@ -680,8 +657,6 @@ def tampil_manifest_dan_aturan_bonus_insentif():
         print('*' + '=' * 59 + '*')
     input("\nTekan Enter untuk melanjutkan...")
 
-
-#SUB-MENU DARI KELOLA JARINGAN HUB DAN RUTE LOGISTIK
 def menu_hub():
     while True:
         clear()
@@ -713,8 +688,6 @@ def menu_hub():
             print("Pilihan tidak valid. Silakan coba lagi.")
             input("Tekan Enter untuk melanjutkan...")
 
-
-#SUB-MENU DARI KELOLA ADMINISTRASI RESI PENGIRIMAN
 def menu_resi():
     while True:
         clear()
@@ -751,7 +724,6 @@ def menu_resi():
             print("Pilihan tidak valid. Silakan coba lagi.")
             input("Tekan Enter untuk melanjutkan...")
 
-#SUB-MENU DARI KELOLA ADMINISTRASI RESI PENGIRIMAN
 def kelola_kurir_dan_manifest_pengantaran():
     while True:
         clear()
@@ -788,8 +760,6 @@ def kelola_kurir_dan_manifest_pengantaran():
             print("Pilihan tidak valid. Silakan coba lagi.")
             input("Tekan Enter untuk melanjutkan...")
 
-
-#MENU UTAMA PROGRAM
 while True:
     clear()
     print('*======== Selamat Datang Di Menu Silog ==========*')
