@@ -249,7 +249,6 @@ def input_resi_pengiriman_baru():
             input("Tekan Enter untuk melanjutkan...")
             continue
 
-#INPUTAN NAMA PENGIRIM DAN BEBERAPA VALIDASINYA
         while True:
             clear()
             print('*' + '=' * 59 + '*')
@@ -273,8 +272,6 @@ def input_resi_pengiriman_baru():
                 continue
             break
 
-
-#INPUTAN NAMA KOTA ASAL DAN BEBERAPA VALIDASINYA
         while True:
             clear()
             print('*' + '=' * 59 + '*')
@@ -303,8 +300,6 @@ def input_resi_pengiriman_baru():
                 continue
             break
 
-
-#INPUTAN NAMA KOTA TUJUAN DAN BEBERAPA VALIDASINYA
         while True:
             clear()
             print('*' + '=' * 59 + '*')
@@ -334,7 +329,6 @@ def input_resi_pengiriman_baru():
                 continue
             break
 
-#INPUTAN BERAT PAKET DAN BEBERAPA VALIDASINYA
         while True:
             clear()
             print('*' + '=' * 59 + '*')
@@ -360,8 +354,6 @@ def input_resi_pengiriman_baru():
                 continue
             break
 
-
-#MENGHITUNG TOTAL BIAYA KIRIM DAN TAMPILAN KEBERHASILAN MENU
         biaya_kirim = (Jarak_Rute * 2000) + (Berat_Paket * 5000)
         bst_resi.root = insert_bst(bst_resi.root, no_resi, nama_pengirim, kota_asal, kota_tujuan, Berat_Paket, biaya_kirim)
 
@@ -382,7 +374,7 @@ def input_resi_pengiriman_baru():
         print('*' + '=' * 59 + '*')
 
         ulang = input("\nApakah ingin melakukan input resi lagi? (Y/N): ").strip().upper()
-        if ulang != 'Y':
+        if ulang != 'Y' or ulang == "":
             break
 
 def lihat_data_resi():
@@ -511,7 +503,7 @@ def input_data_kurir():
         print('*' + '=' * 59 + '*')
 
         ulang = input("\nApakah Anda ingin memasukkan data kurir baru lagi? (Y/N): ").strip().upper()
-        if ulang != 'Y':
+        if ulang != 'Y' or ulang == "":
             break
 
 Petugas_Manifest = {}
@@ -604,7 +596,7 @@ def plotting_penugasan_manifest():
         print('*' + '=' * 59 + '*')
 
         ulang = input("\nApakah Anda ingin menugaskan resi lain ke kurir ini? (Y/N): ").strip().upper()
-        if ulang != 'Y':
+        if ulang != 'Y' or ulang == "":
             break
 
 def tampil_manifest_dan_aturan_bonus_insentif():
@@ -657,7 +649,7 @@ def tampil_manifest_dan_aturan_bonus_insentif():
         print('*' + '=' * 59 + '*')
     input("\nTekan Enter untuk melanjutkan...")
 
-def menu_hub():
+def menu_kelola_jaringan_hub():
     while True:
         clear()
 
@@ -688,7 +680,7 @@ def menu_hub():
             print("Pilihan tidak valid. Silakan coba lagi.")
             input("Tekan Enter untuk melanjutkan...")
 
-def menu_resi():
+def menu_kelola_administrasi():
     while True:
         clear()
 
@@ -707,15 +699,14 @@ def menu_resi():
 
         if pilihan == "2.1":
             input_resi_pengiriman_baru()
-            input("Tekan Enter untuk melanjutkan...")
 
         elif pilihan == "2.2":
             lihat_data_resi()
-            input("Tekan Enter untuk melanjutkan...")
+            input("Tekan Enter untuk kembali ke sub-menu...")
 
         elif pilihan == "2.3":
             urutkan_resi_biaya_terbesar()
-            input("Tekan Enter untuk melanjutkan...")
+            input("Tekan Enter untuk kembali ke sub-menu...")
 
         elif pilihan == "2.4":
             print("Kembali ke menu utama...")
@@ -743,15 +734,13 @@ def kelola_kurir_dan_manifest_pengantaran():
 
         if pilihan == "3.1":
             input_data_kurir()
-            input("Tekan Enter untuk melanjutkan...")
 
         elif pilihan == "3.2":
             plotting_penugasan_manifest()
-            input("Tekan Enter untuk melanjutkan...")
 
         elif pilihan == "3.3":
             tampil_manifest_dan_aturan_bonus_insentif()
-            input("Tekan Enter untuk melanjutkan...")
+            input("Tekan Enter untuk kembali ke sub-menu...")
 
         elif pilihan == "3.4":
             print("Kembali ke menu utama...")
@@ -782,9 +771,9 @@ while True:
         continue
 
     if pilihan == 1:
-        menu_hub()
+        menu_kelola_jaringan_hub()
     elif pilihan == 2:
-        menu_resi()
+        menu_kelola_administrasi()
     elif pilihan == 3:
         kelola_kurir_dan_manifest_pengantaran()
     elif pilihan == 0:
